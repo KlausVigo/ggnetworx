@@ -78,13 +78,6 @@ ggevonet <- function (tr, mapping = NULL, layout = "rectangular", open.angle = 0
 
     p <- p + geom_tree2(layout = layout, ...)
     p <- p + theme_tree()
-    if (layout == "circular" || layout == "radial") {
-        p <- layout_circular(p)
-        p <- p + ylim(0, NA)
-    }
-    else if (layout == "fan") {
-        p <- layout_fan(p, open.angle)
-    }
     class(p) <- c("ggtree", class(p))
     return(p)
 }
@@ -182,13 +175,6 @@ ggnetworx <- function (tr, mapping = NULL, layout = "slanted", open.angle = 0,
 
     p <- p + geom_tree3(layout = layout, ...)
     p <- p + theme_tree()
-    if (layout == "circular" || layout == "radial") {
-        p <- layout_circular(p)
-        p <- p + ylim(0, NA)
-    }
-    else if (layout == "fan") {
-        p <- layout_fan(p, open.angle)
-    }
     class(p) <- c("ggtree", class(p))
     return(p)
 }
