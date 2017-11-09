@@ -1,0 +1,238 @@
+
+##' @method fortify evonet
+##' @importFrom ggplot2 fortify
+##' @export
+fortify.evonet <- function(model, data,
+                           layout    = "rectangular",
+                           ladderize = FALSE,
+                           right     = FALSE,
+                           mrsd      = NULL,
+                           as.Date   = FALSE, ...){
+    df <- ggtree:::fortify.phylo(model, ladderize=ladderize)
+    reticulation <- model$reticulation
+    df.ret <- df[reticulation[,1], , drop=FALSE]
+    df.ret[,c("node", "parent")] <- reticulation
+    df <- rbind(df, df.ret)
+    rownames(df) <- 1:nrow(df)
+    df
+}
+
+
+#' drawing phylogenetic tree from phylo object
+#'
+#'
+#' @title ggevonet
+#' @param tr phylo object
+#' @param mapping aes mapping
+#' @param layout one of 'rectangular', 'slanted', 'fan', 'circular', 'radial', 'equal_angle' or 'daylight'
+#' @param open.angle open angle, only for 'fan' layout
+#' @param mrsd most recent sampling date
+#' @param as.Date logical whether using Date class in time tree
+#' @param yscale y scale
+#' @param yscale_mapping yscale mapping for category variable
+#' @param ladderize logical
+#' @param right logical
+#' @param branch.length variable for scaling branch, if 'none' draw cladogram
+#' @param ndigits number of digits to round numerical annotation variable
+#' @param ... additional parameter
+#' @return tree
+#' @importFrom magrittr %<>%
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 xlab
+#' @importFrom ggplot2 ylab
+#' @importFrom ggplot2 annotate
+#' @importFrom ggplot2 scale_x_reverse
+#' @importFrom ggplot2 ylim
+#' @importFrom ggplot2 coord_flip
+#' @importFrom ggplot2 coord_polar
+#' @importFrom ggplot2 aes
+#' @importFrom ggplot2 aes_
+#' @importFrom ggtree geom_tree2
+#' @importFrom ggtree theme_tree
+#' @author Klaus Schliep
+#' @examples
+#'
+#' (enet <- read.evonet(text = "((a:2,(b:1)#H1:1):1,(#H1,c:1):2);"))
+#' ggevonet(enet) + geom_tiplab()
+#' @export
+ggevonet <- function (tr, mapping = NULL, layout = "rectangular", open.angle = 0,
+          mrsd = NULL, as.Date = FALSE, yscale = "none", yscale_mapping = NULL,
+          ladderize = FALSE, right = FALSE, branch.length = "branch.length",
+          ndigits = NULL, ...)
+{
+    layout %<>% match.arg(c("rectangular", "slanted"))
+# , "fan", "circular", "radial", "unrooted", "equal_angle", "daylight"
+    if (yscale != "none") {
+        layout <- "slanted"
+    }
+    if (is.null(mapping)) {
+        mapping <- aes_(~x, ~y)
+    }
+    else {
+        mapping <- modifyList(aes_(~x, ~y), mapping)
+    }
+    p <- ggplot(tr, mapping = mapping, layout = layout, mrsd = mrsd,
+                as.Date = as.Date, yscale = yscale, yscale_mapping = yscale_mapping,
+                ladderize = ladderize, right = right, branch.length = branch.length,
+                ndigits = ndigits, ...)
+
+    p <- p + geom_tree2(layout = layout, ...)
+    p <- p + theme_tree()
+    if (layout == "circular" || layout == "radial") {
+        p <- layout_circular(p)
+        p <- p + ylim(0, NA)
+    }
+    else if (layout == "fan") {
+        p <- layout_fan(p, open.angle)
+    }
+    class(p) <- c("ggtree", class(p))
+    return(p)
+}
+
+
+##' @method fortify networx
+##' @importFrom phangorn getRoot
+##' @export
+fortify.networx <- function(model, data,
+                           layout    = "unrooted",
+                           ladderize = FALSE,
+                           right     = FALSE,
+                           mrsd      = NULL,
+                           as.Date   = FALSE, ...){
+    root <- getRoot(model)
+    nTips <- length(model$tip.label)
+    label <- character(nrow(model$edge))
+    isTip <- logical(nrow(model$edge))  # edge leading to tip
+    ind <- match(1:nTips, model$edge[,2])
+    label[ind] <- model$tip.label
+    isTip[ind] <- TRUE
+    df <- data.frame(node=model$edge[,2], parent=model$edge[,1],
+                     branch.length=model$edge.length,
+                     split=model$splitIndex,
+                     label=label, isTip=isTip)
+
+    coord <- phangorn:::coords(model, dim="2D")
+    df <- cbind(df, x=coord[df$node,1], y=coord[df$node,2],
+                xend=coord[df$parent,1], yend=coord[df$parent,2])
+    angle <- atan2(df$y - df$yend, df$x - df$xend) * 360 / (2*pi)
+    angle[angle<0] <- angle[angle<0] + 360
+    df <- cbind(df, angle=angle)
+    rownames(df) <- 1:nrow(df)
+    df
+}
+
+
+#' drawing phylogenetic tree from phylo object
+#'
+#'
+#' @title ggnetworx
+#' @param tr phylo object
+#' @param mapping aes mapping
+#' @param layout one of 'rectangular', 'slanted', 'fan', 'circular', 'radial', 'equal_angle' or 'daylight'
+#' @param open.angle open angle, only for 'fan' layout
+#' @param mrsd most recent sampling date
+#' @param as.Date logical whether using Date class in time tree
+#' @param yscale y scale
+#' @param yscale_mapping yscale mapping for category variable
+#' @param ladderize logical
+#' @param right logical
+#' @param branch.length variable for scaling branch, if 'none' draw cladogram
+#' @param ndigits number of digits to round numerical annotation variable
+#' @param ... additional parameter
+#' @return tree
+#' @importFrom utils modifyList
+#' @importFrom magrittr %<>%
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 xlab
+#' @importFrom ggplot2 ylab
+#' @importFrom ggplot2 annotate
+#' @importFrom ggplot2 scale_x_reverse
+#' @importFrom ggplot2 ylim
+#' @importFrom ggplot2 coord_flip
+#' @importFrom ggplot2 coord_polar
+#' @importFrom ggtree theme_tree
+#' @author Klaus Schliep
+#' @examples
+#'
+#' require(phangorn)
+#' data(yeast)
+#' dm <- dist.ml(yeast)
+#' nnet <- neighborNet(dm)
+#' ggnetworx(nnet) + geom_tiplab2()
+#'
+#'
+#' @export
+ggnetworx <- function (tr, mapping = NULL, layout = "slanted", open.angle = 0,
+                      mrsd = NULL, as.Date = FALSE, yscale = "none", yscale_mapping = NULL,
+                      ladderize = FALSE, right = FALSE, branch.length = "branch.length",
+                      ndigits = NULL, ...)
+{
+    layout %<>% match.arg(c("slanted"))
+# "rectangular", "fan", "circular", "radial", "unrooted", "equal_angle", "daylight"
+    if (is.null(mapping)) {
+        mapping <- aes_(~x, ~y)
+    }
+    else {
+        mapping <- modifyList(aes_(~x, ~y), mapping)
+    }
+    p <- ggplot(tr, mapping = mapping, layout = layout, mrsd = mrsd,
+                as.Date = as.Date, yscale = yscale, yscale_mapping = yscale_mapping,
+                ladderize = ladderize, right = right, branch.length = branch.length,
+                ndigits = ndigits, ...)
+
+    p <- p + geom_tree3(layout = layout, ...)
+    p <- p + theme_tree()
+    if (layout == "circular" || layout == "radial") {
+        p <- layout_circular(p)
+        p <- p + ylim(0, NA)
+    }
+    else if (layout == "fan") {
+        p <- layout_fan(p, open.angle)
+    }
+    class(p) <- c("ggtree", class(p))
+    return(p)
+}
+
+
+
+
+
+##' add tree layer
+##'
+##'
+##' @title geom_tree3
+##' @param layout one of 'rectangular', 'slanted', 'circular', 'radial' or 'unrooted'
+##' @param ... additional parameter
+##' @return tree layer
+##' @importFrom ggplot2 geom_segment
+##' @importFrom ggplot2 aes
+##' @export
+##' @author Klaus Schliep
+geom_tree3 <- function(layout="rectangular", ...) {
+    x <- y <- xend <- yend <- parent <- NULL
+    lineend  = "round"
+    if (layout == "rectangular" || layout == "fan" || layout == "circular") {
+        list(
+            geom_segment(aes(x    = x,
+                             xend = xend,
+                             y    = y,
+                             yend = y),
+                         lineend  = lineend, ...),
+
+            geom_segment(aes(x    = xend,
+                             xend = xend,
+                             y    = y,
+                             yend = yend),
+                         lineend  = lineend, ...)
+        )
+    } else if (layout == "slanted" || layout == "radial" || layout == "unrooted") {
+        geom_segment(aes(x    = x,
+                         xend = xend,
+                         y    = y,
+                         yend = yend),
+                     lineend  = lineend, ...)
+    }
+}
+
+
+
