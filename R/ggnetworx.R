@@ -8,7 +8,9 @@ fortify.evonet <- function(model, data,
                            right     = FALSE,
                            mrsd      = NULL,
                            as.Date   = FALSE, ...){
-    df <- ggtree:::fortify.phylo(model, ladderize=ladderize)
+    class(model) <- "phylo"
+#    df <- ggtree:::fortify.phylo(model, ladderize=ladderize)
+    df <- fortify(model, ladderize=ladderize)
     reticulation <- model$reticulation
     df.ret <- df[reticulation[,1], , drop=FALSE]
     df.ret[,c("node", "parent")] <- reticulation
