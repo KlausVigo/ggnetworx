@@ -12,6 +12,11 @@ Schliep K.P. 2011. phangorn: phylogenetic analysis in R. Bioinformatics, 27(4) 5
 
 Schliep, K., Potts, A. J., Morrison, D. A. and Grimm, G. W. (2017), Intertwining phylogenetic trees and networks. Methods Ecol Evol. 8, 1212–1220.
 
+and also 
+
+Guangchuang Yu, David Smith, Huachen Zhu, Yi Guan, Tommy Tsan-Yuk Lam. ggtree: an R package for visualization and annotation of phylogenetic trees with their covariates and other associated data. Methods in Ecology and Evolution 2017, 8(1):28-36
+
+
 License
 -------
 phangorn is licensed under the AGPL v3.
