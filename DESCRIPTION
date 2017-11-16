@@ -5,7 +5,7 @@ Version: 0.1.0
 Authors@R: c(person("Klaus", "Schliep", email="klaus.schliep@gmail.com", role = c("aut", "cre")))
 Author: Klaus Schliep <klaus.schliep@gmail.com>
 Maintainer: Klaus Schliep <klaus.schliep@gmail.com>
-Description: 'ggplot2' like system to plot phylogenteic networks from 'ape' and 'phangorn'.
+Description: 'ggplot2' like system to plot phylogentic networks from 'ape' and 'phangorn'.
 Depends:
     R (>= 3.3.0),
     ape (>= 5.0), 
