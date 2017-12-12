@@ -9,7 +9,7 @@ fortify.evonet <- function(model, data,
                            mrsd      = NULL,
                            as.Date   = FALSE, ...){
     class(model) <- "phylo"
-#    df <- ggtree:::fortify.phylo(model, ladderize=ladderize)
+#  ggtree:::fortify.phylo
     df <- fortify(model, ladderize=ladderize)
     reticulation <- model$reticulation
     df.ret <- df[reticulation[,1], , drop=FALSE]
@@ -51,6 +51,7 @@ fortify.evonet <- function(model, data,
 #' @importFrom ggplot2 aes_
 #' @importFrom ggtree geom_tree2
 #' @importFrom ggtree theme_tree
+#' @importFrom phangorn coords
 #' @author Klaus Schliep
 #' @examples
 #'
@@ -106,7 +107,7 @@ fortify.networx <- function(model, data,
                      split=model$splitIndex,
                      label=label, isTip=isTip)
 
-    coord <- phangorn:::coords(model, dim="2D")
+    coord <- coords(model, dim="2D")
     df <- cbind(df, x=coord[df$node,1], y=coord[df$node,2],
                 xend=coord[df$parent,1], yend=coord[df$parent,2])
     angle <- atan2(df$y - df$yend, df$x - df$xend) * 360 / (2*pi)
