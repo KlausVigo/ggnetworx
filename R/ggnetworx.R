@@ -15,7 +15,7 @@ fortify.evonet <- function(model, data,
     df.ret <- df[reticulation[,1], , drop=FALSE]
     df.ret[,c("node", "parent")] <- reticulation
     df <- rbind(df, df.ret)
-    rownames(df) <- 1:nrow(df)
+#    rownames(df) <- 1:nrow(df)
     df
 }
 
@@ -38,6 +38,7 @@ fortify.evonet <- function(model, data,
 #' @param ndigits number of digits to round numerical annotation variable
 #' @param ... additional parameter
 #' @return tree
+#' @seealso \code{\link[ape]{evonet}}, \code{\link[ggtree]{ggtree}}
 #' @importFrom magrittr %<>%
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 xlab
@@ -113,7 +114,7 @@ fortify.networx <- function(model, data,
     angle <- atan2(df$y - df$yend, df$x - df$xend) * 360 / (2*pi)
     angle[angle<0] <- angle[angle<0] + 360
     df <- cbind(df, angle=angle)
-    rownames(df) <- 1:nrow(df)
+#    rownames(df) <- 1:nrow(df)
     df
 }
 
@@ -137,6 +138,11 @@ fortify.networx <- function(model, data,
 #' @param ndigits number of digits to round numerical annotation variable
 #' @param ... additional parameter
 #' @return tree
+#' @seealso \code{\link[ggtree]{ggtree}}, \code{\link[phangorn]{networx}},
+#' \code{\link[phangorn]{consensusNet}}, \code{\link[phangorn]{neighborNet}}
+#' @references Schliep, K., Potts, A. J., Morrison, D. A. and Grimm, G. W.
+#' (2017), Intertwining phylogenetic trees and networks.
+#' \emph{Methods Ecol Evol}. \bold{8}, 1212--1220. doi:10.1111/2041-210X.12760
 #' @importFrom utils modifyList
 #' @importFrom magrittr %<>%
 #' @importFrom ggplot2 ggplot
@@ -229,3 +235,14 @@ geom_tree3 <- function(layout="rectangular", ...) {
 
 
 
+##' pipe
+##' @importFrom magrittr %>%
+##' @name %>%
+##' @export
+##' @rdname pipe
+##' @param lhs left hand side
+##' @param rhs right hand side
+##' @usage lhs \%>\% rhs
+##' @seealso
+##' \link[magrittr]{pipe}
+NULL

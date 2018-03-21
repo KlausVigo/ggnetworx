@@ -53,6 +53,15 @@ ggnetworx(nnet) + geom_tiplab2()
 
 
 }
+\references{
+Schliep, K., Potts, A. J., Morrison, D. A. and Grimm, G. W.
+(2017), Intertwining phylogenetic trees and networks.
+\emph{Methods Ecol Evol}. \bold{8}, 1212--1220. doi:10.1111/2041-210X.12760
+}
+\seealso{
+\code{\link[ggtree]{ggtree}}, \code{\link[phangorn]{networx}},
+\code{\link[phangorn]{consensusNet}}, \code{\link[phangorn]{neighborNet}}
+}
 \author{
 Klaus Schliep
 }
