@@ -7,7 +7,8 @@
 geom_tree3(layout = "rectangular", ...)
 }
 \arguments{
-\item{layout}{one of 'rectangular', 'slanted', 'circular', 'radial' or 'unrooted'}
+\item{layout}{one of 'rectangular', 'slanted', 'circular', 'radial' or
+'unrooted'}
 
 \item{...}{additional parameter}
 }

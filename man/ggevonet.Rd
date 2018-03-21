@@ -14,7 +14,7 @@ ggevonet(tr, mapping = NULL, layout = "rectangular", open.angle = 0,
 
 \item{mapping}{aes mapping}
 
-\item{layout}{one of 'rectangular', 'slanted', 'fan', 'circular', 'radial', 'equal_angle' or 'daylight'}
+\item{layout}{one of 'rectangular', 'slanted'}
 
 \item{open.angle}{open angle, only for 'fan' layout}
 
@@ -44,7 +44,7 @@ drawing phylogenetic tree from phylo object
 }
 \examples{
 
-(enet <- read.evonet(text = "((a:2,(b:1)#H1:1):1,(#H1,c:1):2);"))
+(enet <- read.evonet(text="((a:2,(b:1)#H1:1):1,(#H1,c:1):2);"))
 ggevonet(enet) + geom_tiplab()
 }
 \author{

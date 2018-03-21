@@ -3,11 +3,11 @@
 ##' @importFrom ggplot2 fortify
 ##' @export
 fortify.evonet <- function(model, data,
-                           layout    = "rectangular",
-                           ladderize = FALSE,
-                           right     = FALSE,
-                           mrsd      = NULL,
-                           as.Date   = FALSE, ...){
+                           layout   ="rectangular",
+                           ladderize=FALSE,
+                           right    =FALSE,
+                           mrsd     =NULL,
+                           as.Date  =FALSE, ...){
     class(model) <- "phylo"
 #  ggtree:::fortify.phylo
     df <- fortify(model, ladderize=ladderize)
@@ -26,7 +26,7 @@ fortify.evonet <- function(model, data,
 #' @title ggevonet
 #' @param tr phylo object
 #' @param mapping aes mapping
-#' @param layout one of 'rectangular', 'slanted', 'fan', 'circular', 'radial', 'equal_angle' or 'daylight'
+#' @param layout one of 'rectangular', 'slanted'
 #' @param open.angle open angle, only for 'fan' layout
 #' @param mrsd most recent sampling date
 #' @param as.Date logical whether using Date class in time tree
@@ -55,13 +55,13 @@ fortify.evonet <- function(model, data,
 #' @author Klaus Schliep
 #' @examples
 #'
-#' (enet <- read.evonet(text = "((a:2,(b:1)#H1:1):1,(#H1,c:1):2);"))
+#' (enet <- read.evonet(text="((a:2,(b:1)#H1:1):1,(#H1,c:1):2);"))
 #' ggevonet(enet) + geom_tiplab()
 #' @export
-ggevonet <- function (tr, mapping = NULL, layout = "rectangular", open.angle = 0,
-          mrsd = NULL, as.Date = FALSE, yscale = "none", yscale_mapping = NULL,
-          ladderize = FALSE, right = FALSE, branch.length = "branch.length",
-          ndigits = NULL, ...)
+ggevonet <- function (tr, mapping=NULL, layout="rectangular", open.angle=0,
+          mrsd=NULL, as.Date=FALSE, yscale="none", yscale_mapping=NULL,
+          ladderize=FALSE, right=FALSE, branch.length="branch.length",
+          ndigits=NULL, ...)
 {
     layout %<>% match.arg(c("rectangular", "slanted"))
 # , "fan", "circular", "radial", "unrooted", "equal_angle", "daylight"
@@ -74,12 +74,12 @@ ggevonet <- function (tr, mapping = NULL, layout = "rectangular", open.angle = 0
     else {
         mapping <- modifyList(aes_(~x, ~y), mapping)
     }
-    p <- ggplot(tr, mapping = mapping, layout = layout, mrsd = mrsd,
-                as.Date = as.Date, yscale = yscale, yscale_mapping = yscale_mapping,
-                ladderize = ladderize, right = right, branch.length = branch.length,
-                ndigits = ndigits, ...)
+    p <- ggplot(tr, mapping=mapping, layout=layout, mrsd=mrsd, as.Date=as.Date,
+                yscale=yscale, yscale_mapping=yscale_mapping,
+                ladderize=ladderize, right=right, branch.length=branch.length,
+                ndigits=ndigits, ...)
 
-    p <- p + geom_tree2(layout = layout, ...)
+    p <- p + geom_tree2(layout=layout, ...)
     p <- p + theme_tree()
     class(p) <- c("ggtree", class(p))
     return(p)
@@ -90,11 +90,11 @@ ggevonet <- function (tr, mapping = NULL, layout = "rectangular", open.angle = 0
 ##' @importFrom phangorn getRoot
 ##' @export
 fortify.networx <- function(model, data,
-                           layout    = "unrooted",
-                           ladderize = FALSE,
-                           right     = FALSE,
-                           mrsd      = NULL,
-                           as.Date   = FALSE, ...){
+                           layout   ="unrooted",
+                           ladderize=FALSE,
+                           right    =FALSE,
+                           mrsd     =NULL,
+                           as.Date  =FALSE, ...){
     root <- getRoot(model)
     nTips <- length(model$tip.label)
     label <- character(nrow(model$edge))
@@ -124,7 +124,8 @@ fortify.networx <- function(model, data,
 #' @title ggnetworx
 #' @param tr phylo object
 #' @param mapping aes mapping
-#' @param layout one of 'rectangular', 'slanted', 'fan', 'circular', 'radial', 'equal_angle' or 'daylight'
+#' @param layout one of 'rectangular', 'slanted', 'fan', 'circular', 'radial',
+#' 'equal_angle' or 'daylight'
 #' @param open.angle open angle, only for 'fan' layout
 #' @param mrsd most recent sampling date
 #' @param as.Date logical whether using Date class in time tree
@@ -158,25 +159,26 @@ fortify.networx <- function(model, data,
 #'
 #'
 #' @export
-ggnetworx <- function (tr, mapping = NULL, layout = "slanted", open.angle = 0,
-                      mrsd = NULL, as.Date = FALSE, yscale = "none", yscale_mapping = NULL,
-                      ladderize = FALSE, right = FALSE, branch.length = "branch.length",
-                      ndigits = NULL, ...)
+ggnetworx <- function (tr, mapping=NULL, layout="slanted", open.angle=0,
+        mrsd=NULL, as.Date=FALSE, yscale="none", yscale_mapping=NULL,
+        ladderize=FALSE, right=FALSE, branch.length="branch.length",
+        ndigits=NULL, ...)
 {
     layout %<>% match.arg(c("slanted"))
-# "rectangular", "fan", "circular", "radial", "unrooted", "equal_angle", "daylight"
+# "rectangular", "fan", "circular", "radial", "unrooted", "equal_angle",
+#    "daylight"
     if (is.null(mapping)) {
         mapping <- aes_(~x, ~y)
     }
     else {
         mapping <- modifyList(aes_(~x, ~y), mapping)
     }
-    p <- ggplot(tr, mapping = mapping, layout = layout, mrsd = mrsd,
-                as.Date = as.Date, yscale = yscale, yscale_mapping = yscale_mapping,
-                ladderize = ladderize, right = right, branch.length = branch.length,
-                ndigits = ndigits, ...)
+    p <- ggplot(tr, mapping=mapping, layout=layout, mrsd=mrsd, as.Date=as.Date,
+                yscale=yscale, yscale_mapping=yscale_mapping,
+                ladderize=ladderize, right=right, branch.length=branch.length,
+                ndigits=ndigits, ...)
 
-    p <- p + geom_tree3(layout = layout, ...)
+    p <- p + geom_tree3(layout=layout, ...)
     p <- p + theme_tree()
     class(p) <- c("ggtree", class(p))
     return(p)
@@ -190,7 +192,8 @@ ggnetworx <- function (tr, mapping = NULL, layout = "slanted", open.angle = 0,
 ##'
 ##'
 ##' @title geom_tree3
-##' @param layout one of 'rectangular', 'slanted', 'circular', 'radial' or 'unrooted'
+##' @param layout one of 'rectangular', 'slanted', 'circular', 'radial' or
+##' 'unrooted'
 ##' @param ... additional parameter
 ##' @return tree layer
 ##' @importFrom ggplot2 geom_segment
@@ -199,7 +202,7 @@ ggnetworx <- function (tr, mapping = NULL, layout = "slanted", open.angle = 0,
 ##' @author Klaus Schliep
 geom_tree3 <- function(layout="rectangular", ...) {
     x <- y <- xend <- yend <- parent <- NULL
-    lineend  = "round"
+    lineend <- "round"
     if (layout == "rectangular" || layout == "fan" || layout == "circular") {
         list(
             geom_segment(aes(x    = x,
@@ -214,7 +217,8 @@ geom_tree3 <- function(layout="rectangular", ...) {
                              yend = yend),
                          lineend  = lineend, ...)
         )
-    } else if (layout == "slanted" || layout == "radial" || layout == "unrooted") {
+    } else if (layout == "slanted" || layout == "radial" ||
+               layout == "unrooted") {
         geom_segment(aes(x    = x,
                          xend = xend,
                          y    = y,
