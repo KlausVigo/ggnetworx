@@ -14,5 +14,7 @@ Depends:
 Imports: 
     magrittr,
     phangorn (>= 2.1)
+Suggests:
+    vdiffr
 License: AGPL (>= 3)
 RoxygenNote: 6.0.1
