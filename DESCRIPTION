@@ -15,7 +15,8 @@ Imports:
     magrittr,
     phangorn (>= 2.1)
 Suggests:
-    vdiffr
+    vdiffr, 
+    testthat
 License: AGPL (>= 3)
 URL: https://github.com/KlausVigo/ggnetworx
 BugReports: https://github.com/KlausVigo/ggnetworx/issues
