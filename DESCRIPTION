@@ -2,7 +2,8 @@ Package: ggnetworx
 Type: Package
 Title: Visualization and Annotation of Phylogenetic Networks
 Version: 0.1.0
-Authors@R: c(person("Klaus", "Schliep", email="klaus.schliep@gmail.com", role = c("aut", "cre")))
+Authors@R: c(person("Klaus", "Schliep", email="klaus.schliep@gmail.com", role = c("aut", "cre")),
+             person(person("Guangchuang", "Yu", role = c("ctb")))
 Author: Klaus Schliep <klaus.schliep@gmail.com>
 Maintainer: Klaus Schliep <klaus.schliep@gmail.com>
 Description: 'ggplot2' like system to plot phylogentic networks from 'ape' and 'phangorn'.
