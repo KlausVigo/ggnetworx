@@ -19,15 +19,23 @@ r_packages:
   - vdiffr
   - magrittr
   - knitr
+  - covr
   - testthat
 
 bioc_packages:
   - ggtree
   - BiocStyle
+  - BiocCheck
 
-r_github_packages:
-  - jimhester/covr
+#r_github_packages:
+#  - jimhester/covr
 
+before_install:
+  - tlmgr install bera
+  - tlmgr install nowidow
+  - tlmgr install parnotes
+  - tlmgr install marginfix
+#  - Rscript -e 'update.packages(ask = FALSE)'
 
 after_success:
   - Rscript -e 'library(covr);coveralls();codecov()'
@@ -36,4 +44,4 @@ after_success:
 notifications:
   email:
     on_success: change
-    on_failure: always
+    on_failure: change
