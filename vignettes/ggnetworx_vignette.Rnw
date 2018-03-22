@@ -1,0 +1,51 @@
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{R/Bioconductor package for visualization of phylogenetic networks in a ggplot2 framework.}
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{url}
+
+<<style-knitr, eval=TRUE, echo=FALSE, results="asis">>=
+BiocStyle::latex()
+@
+
+
+\begin{document}
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+@
+
+\bioctitle{The \Biocpkg{ggnetworx} package for visualization of phylogenetic
+networks in a ggplot2 framework. }
+
+\author{Klaus Schliep \thanks{\email{klaus.schliep@gmail.com}}\\
+University of Massachusetts Boston}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+
+
+\nocite{Schliep2011}
+\nocite{Schliep2017}
+\nocite{Paradis2004}
+\nocite{Holland2004}
+\nocite{Yu2017}
+\nocite{Bryant2004}
+\nocite{Huson2006}
+\nocite{Cardona2008}
+% Paradis2018
+
+<<sessionInfo>>=
+sessionInfo()
+@
+
+\section{Summary}
+
+
+
+\bibliography{ggnetworx}
+\end{document}
