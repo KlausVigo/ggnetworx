@@ -37,6 +37,7 @@ University of Massachusetts Boston}
 \nocite{Bryant2004}
 \nocite{Huson2006}
 \nocite{Cardona2008}
+\nocite{Wickham2016}
 % Paradis2018
 
 <<sessionInfo>>=

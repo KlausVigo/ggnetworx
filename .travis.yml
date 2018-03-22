@@ -18,7 +18,12 @@ r_packages:
   - ggplot2
   - vdiffr
   - magrittr
-  
+  - knitr
+  - testthat
+
+bioc_packages:
+  - ggtree
+  - BiocStyle
 
 r_github_packages:
   - jimhester/covr
@@ -26,8 +31,8 @@ r_github_packages:
 
 after_success:
   - Rscript -e 'library(covr);coveralls();codecov()'
-  
-  
+
+
 notifications:
   email:
     on_success: change
