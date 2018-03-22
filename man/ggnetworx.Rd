@@ -44,11 +44,9 @@ tree
 drawing phylogenetic tree from phylo object
 }
 \examples{
-
-require(phangorn)
-data(yeast)
-dm <- dist.ml(yeast)
-nnet <- neighborNet(dm)
+data(yeast, package="phangorn")
+dm <- phangorn::dist.ml(yeast)
+nnet <- phangorn::neighborNet(dm)
 ggnetworx(nnet) + geom_tiplab2()
 
 

@@ -1,14 +1,13 @@
 context("networx")
 
-library(phangorn)
-data(yeast)
-dm <- dist.ml(yeast)
-nnet <- neighborNet(dm)
 
-(enet <- read.evonet(text="((a:2,(b:1)#H1:1):1,(#H1,c:1):2);"))
+data(yeast, package="phangorn")
+dm <- phangorn::dist.ml(yeast)
+nnet <- phangorn::neighborNet(dm)
+
+(enet <- ape::read.evonet(text="((a:2,(b:1)#H1:1):1,(#H1,c:1):2);"))
 
 splits_network <-  ggnetworx(nnet) + geom_tiplab2()
-
 reticulate_network <- ggevonet(enet) + geom_tiplab()
 
 

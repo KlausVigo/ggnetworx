@@ -53,9 +53,9 @@ fortify.evonet <- function(model, data,
 #' @importFrom ggtree geom_tree2
 #' @importFrom ggtree theme_tree
 #' @importFrom phangorn coords
+#' @importFrom ape read.evonet
 #' @author Klaus Schliep
 #' @examples
-#'
 #' (enet <- read.evonet(text="((a:2,(b:1)#H1:1):1,(#H1,c:1):2);"))
 #' ggevonet(enet) + geom_tiplab()
 #' @export
@@ -156,11 +156,9 @@ fortify.networx <- function(model, data,
 #' @importFrom ggtree theme_tree
 #' @author Klaus Schliep
 #' @examples
-#'
-#' require(phangorn)
-#' data(yeast)
-#' dm <- dist.ml(yeast)
-#' nnet <- neighborNet(dm)
+#' data(yeast, package="phangorn")
+#' dm <- phangorn::dist.ml(yeast)
+#' nnet <- phangorn::neighborNet(dm)
 #' ggnetworx(nnet) + geom_tiplab2()
 #'
 #'
