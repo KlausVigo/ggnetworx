@@ -1,3 +1,10 @@
+[![Build Status](https://travis-ci.org/KlausVigo/ggnetworx.svg?branch=master)](https://travis-ci.org/KlausVigo/ggnetworx)
+[![codecov](https://codecov.io/gh/KlausVigo/ggnetworx/branch/master/graph/badge.svg)](https://codecov.io/gh/KlausVigo/ggnetworx)
+[![Coverage Status](https://coveralls.io/repos/github/KlausVigo/ggnetworx/badge.svg?branch=master)](https://coveralls.io/github/KlausVigo/ggnetworx?branch=master)
+
+
+
+
 ggnetworx
 ========================================================
 
