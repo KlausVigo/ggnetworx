@@ -96,19 +96,27 @@ fortify.networx <- function(model, data,
                            right    =FALSE,
                            mrsd     =NULL,
                            as.Date  =FALSE, ...){
-    root <- getRoot(model)
+#    root <- getRoot(model)
     nTips <- length(model$tip.label)
     label <- character(nrow(model$edge))
     isTip <- logical(nrow(model$edge))  # edge leading to tip
-    ind <- match(1:nTips, model$edge[,2])
-    label[ind] <- model$tip.label
+    # setdiff(Nnet$edge[,2], Nnet$edge[,1])
+    # 1:nTips may not correspond to tips
+    if(!is.null(model$translate)){
+        ind <- match(model$translate$node, model$edge[,2])
+        label[ind] <- Nnet$translate$label
+    }
+    else{
+        ind <- match(1:nTips, model$edge[,2])
+        label[ind] <- model$tip.label
+    }
     isTip[ind] <- TRUE
     df <- data.frame(node=model$edge[,2], parent=model$edge[,1],
                      branch.length=model$edge.length,
                      split=model$splitIndex,
                      label=label, isTip=isTip)
-
-    coord <- coords(model, dim="2D")
+    if(!is.null(model$.plot)) coord <- model$.plot$vertices
+    else coord <- coords(model, dim="2D")
     df <- cbind(df, x=coord[df$node,1], y=coord[df$node,2],
                 xend=coord[df$parent,1], yend=coord[df$parent,2])
     angle <- atan2(df$y - df$yend, df$x - df$xend) * 360 / (2*pi)
