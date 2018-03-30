@@ -100,11 +100,10 @@ fortify.networx <- function(model, data,
     nTips <- length(model$tip.label)
     label <- character(nrow(model$edge))
     isTip <- logical(nrow(model$edge))  # edge leading to tip
-    # setdiff(Nnet$edge[,2], Nnet$edge[,1])
     # 1:nTips may not correspond to tips
     if(!is.null(model$translate)){
         ind <- match(model$translate$node, model$edge[,2])
-        label[ind] <- Nnet$translate$label
+        label[ind] <- model$translate$label
     }
     else{
         ind <- match(1:nTips, model$edge[,2])
