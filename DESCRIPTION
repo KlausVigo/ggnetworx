@@ -9,11 +9,11 @@ Maintainer: Klaus Schliep <klaus.schliep@gmail.com>
 Description: 'ggplot2' like system to plot phylogentic networks from 'ape' and 'phangorn'.
 Depends:
     R (>= 3.3.0),
-    ape (>= 5.0), 
     ggplot2 (>= 2.2.0),
     ggtree
 Imports: 
     magrittr,
+    ape (>= 5.0), 
     phangorn (>= 2.1)
 Suggests:
     vdiffr, 

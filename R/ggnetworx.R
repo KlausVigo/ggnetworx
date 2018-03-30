@@ -56,7 +56,7 @@ fortify.evonet <- function(model, data,
 #' @importFrom ape read.evonet
 #' @author Klaus Schliep
 #' @examples
-#' (enet <- read.evonet(text="((a:2,(b:1)#H1:1):1,(#H1,c:1):2);"))
+#' (enet <- ape::read.evonet(text="((a:2,(b:1)#H1:1):1,(#H1,c:1):2);"))
 #' ggevonet(enet) + geom_tiplab()
 #' @export
 ggevonet <- function (tr, mapping=NULL, layout="rectangular", open.angle=0,
