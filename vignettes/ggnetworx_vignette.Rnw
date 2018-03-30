@@ -8,6 +8,8 @@
 
 <<style-knitr, eval=TRUE, echo=FALSE, results="asis">>=
 BiocStyle::latex()
+suppressPackageStartupMessages(library(ggtree))
+suppressPackageStartupMessages(library(phangorn))
 @
 
 
@@ -27,6 +29,26 @@ University of Massachusetts Boston}
 \tableofcontents
 
 \section{Introduction}
+\Biocpkg{ggnetworx} extends the \Biocpkg{ggtree} package to all plotting several
+types of phylogentic networks. More specific it is possible to plot splits
+graphs as in Splitstree and (directed, rooted) trees with reticulations.
+
+\section{Splits graphs}
+We first read the necessary libraries and read in a splits graph
+<<>>=
+library(phangorn)
+library(ggnetworx)
+fdir <- system.file("extdata/trees", package = "phangorn")
+Nnet <- read.nexus.networx(file.path(fdir,"woodmouse.nxs"))
+@
+
+<<>>=
+ggnetworx(Nnet) + geom_tiplab2()
+@
+
+
+
+\section{Summary}
 
 
 \nocite{Schliep2011}
@@ -40,13 +62,13 @@ University of Massachusetts Boston}
 \nocite{Wickham2016}
 % Paradis2018
 
+
+\newpage
+\bibliography{ggnetworx}
+
+\newpage
 <<sessionInfo>>=
 sessionInfo()
 @
 
-\section{Summary}
-
-
-
-\bibliography{ggnetworx}
 \end{document}
