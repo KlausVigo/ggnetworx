@@ -28,12 +28,19 @@ University of Massachusetts Boston}
 
 \tableofcontents
 
+\newpage
 \section{Introduction}
-\Biocpkg{ggnetworx} extends the \Biocpkg{ggtree} package to all plotting several
-types of phylogentic networks. More specific it is possible to plot splits
-graphs as in Splitstree and (directed, rooted) trees with reticulations.
+\Biocpkg{ggnetworx} extends the \Biocpkg{ggtree}\cite{Yu2017} package to allow
+visualize several types of phylogentic networks using the ggplot2
+\cite{Wickham2016} syntax. More specific \Biocpkg{ggnetworx} contains function
+to plot (unrooted, undirected) splits graphs and (directed, rooted) trees with
+reticulations.
 
 \section{Splits graphs}
+Splits graph allow to non-compatible splits definition and are most often
+used to visualize Consensus Networks \cite{Holland2004} or Neighbor-Nets
+\cite{Bryant2004}. This can be either done using the consensusNet or neighbor net function in \CRANpkg{phangorn}\cite{Schliep2011} or by importing from SplitsTree \cite{Huson2006}
+
 We first read the necessary libraries and read in a splits graph
 <<>>=
 library(phangorn)
@@ -42,11 +49,23 @@ fdir <- system.file("extdata/trees", package = "phangorn")
 Nnet <- read.nexus.networx(file.path(fdir,"woodmouse.nxs"))
 @
 
+
 <<>>=
 ggnetworx(Nnet) + geom_tiplab2()
 @
 
+\section{Plotting reticulation networks}
 
+The function \Rfunction{ggevonet} plots phylogenetic trees with reticulation.
+A recent addition to the \CRANpkg{ape}\cite{Paradis2004}  made it possible
+to read in trees in extended newick format \cite{Cardona2008}.
+
+<<>>=
+## from Fig. 2 in Cardona et al. 2008:
+z <- read.evonet(text =
+         "((1,((2,(3,(4)Y#H1)g)e,(((Y#H1, 5)h,6)f)X#H2)c)a,((X#H2,7)d,8)b)r;")
+ggevonet(z) + geom_tiplab()
+@
 
 \section{Summary}
 
@@ -54,19 +73,22 @@ ggnetworx(Nnet) + geom_tiplab2()
 \nocite{Schliep2011}
 \nocite{Schliep2017}
 \nocite{Paradis2004}
+% \nocite{Paradis2018}
 \nocite{Holland2004}
 \nocite{Yu2017}
 \nocite{Bryant2004}
 \nocite{Huson2006}
 \nocite{Cardona2008}
 \nocite{Wickham2016}
-% Paradis2018
+
 
 
 \newpage
 \bibliography{ggnetworx}
 
 \newpage
+\appendix
+\section{Session info}
 <<sessionInfo>>=
 sessionInfo()
 @
