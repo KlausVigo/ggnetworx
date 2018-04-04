@@ -11,11 +11,17 @@ fortify.evonet <- function(model, data,
     class(model) <- "phylo"
 #  ggtree:::fortify.phylo
     df <- fortify(model, ladderize=ladderize)
+
+    hybridEdge <- logical(nrow(df))
+    hybridEdge[grep("#", df$label)] <- TRUE
+    df <- cbind(df, hybridEdge=hybridEdge)
+
     reticulation <- model$reticulation
     df.ret <- df[reticulation[,1], , drop=FALSE]
+#    df.ret <- df[reticulation[,2], , drop=FALSE]
     df.ret[,c("node", "parent")] <- reticulation
+    df.ret[, "hybridEdge"] <- TRUE
     df <- rbind(df, df.ret)
-#    rownames(df) <- 1:nrow(df)
     df
 }
 
