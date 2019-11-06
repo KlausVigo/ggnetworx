@@ -1,7 +1,7 @@
 Package: ggnetworx
 Type: Package
-Title: Visualization and Annotation of Phylogenetic Networks
-Version: 0.1.0
+Title: Visualization of Phylogenetic Networks
+Version: 0.99.0
 Authors@R: c(person("Klaus", "Schliep", email="klaus.schliep@gmail.com", role = c("aut", "cre")),
              person("Guangchuang", "Yu", role = c("ctb")))
 Author: Klaus Schliep <klaus.schliep@gmail.com>
@@ -24,4 +24,4 @@ VignetteBuilder: knitr
 License: AGPL (>= 3)
 URL: https://github.com/KlausVigo/ggnetworx
 BugReports: https://github.com/KlausVigo/ggnetworx/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
