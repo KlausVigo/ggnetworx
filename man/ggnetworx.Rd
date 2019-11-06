@@ -5,9 +5,9 @@
 \title{ggnetworx}
 \usage{
 ggnetworx(tr, mapping = NULL, layout = "slanted", open.angle = 0,
-  mrsd = NULL, as.Date = FALSE, yscale = "none", yscale_mapping = NULL,
-  ladderize = FALSE, right = FALSE, branch.length = "branch.length",
-  ndigits = NULL, ...)
+  mrsd = NULL, as.Date = FALSE, yscale = "none",
+  yscale_mapping = NULL, ladderize = FALSE, right = FALSE,
+  branch.length = "branch.length", ndigits = NULL, ...)
 }
 \arguments{
 \item{tr}{phylo object}
