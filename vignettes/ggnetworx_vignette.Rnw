@@ -12,6 +12,12 @@ suppressPackageStartupMessages(library(ggtree))
 suppressPackageStartupMessages(library(phangorn))
 @
 
+%%% TO DO (Later) %%%
+% Change 'ggnetworx' to 'ggsplitnet'
+%
+%
+%%%%%%%%%%%%%%%%%%%%%
+
 
 \begin{document}
 <<setup, include=FALSE, cache=FALSE>>=
@@ -30,27 +36,17 @@ University of Massachusetts Boston}
 
 \newpage
 \section{Introduction}
-\Biocpkg{ggnetworx} extends the \Biocpkg{ggtree}\cite{Yu2017} package to allow
-visualization of several types of phylogentic networks using the \CRANpkg{ggplot2}
-\cite{Wickham2016} syntax.
+\Biocpkg{ggnetworx} extends the \Biocpkg{ggtree} \cite{Yu2017} package to allow
+visualization of several types of phylogentic networks using the \CRANpkg{ggplot2} \cite{Wickham2016} syntax.
 More specifically, \Biocpkg{ggnetworx} contains functions
-to plot (unrooted, undirected) splits, graphs, and (directed, rooted) trees with
-reticulations. It offers an alternative to the plot functions already available
+to plot split graphs (unrooted, undirected) and trees (rooted, directed) with reticulations. It offers an alternative to the plot functions already available
 in \CRANpkg{ape} and \CRANpkg{phangorn}.
 
-\section{Splits graphs}
+\section{Plotting Split Graphs}
 
+Split graphs allow for the definition of con-compatible splits and are most often used to visualize Consensus Networks \cite{Holland2004} or Neighbor-Nets \cite{Bryant2004}. This can be either done using the consensusNet or neighbor-net functions in \CRANpkg{phangorn} \cite{Schliep2011} or by importing nexus files from SplitsTree \cite{Huson2006}.
 
-Splits graph allow to non-compatible splits definition and are most often
-used to visualize Consensus Networks \cite{Holland2004} or Neighbor-Nets
-\cite{Bryant2004}. This can be either done using the consensusNet or neighbor-net
-function in \CRANpkg{phangorn}\cite{Schliep2011} or by importing nexus files
-from SplitsTree \cite{Huson2006}.
-
-Reworded:\\
-Splits graphs allow for the definition of con-compatible splits and are most oftin used to visualize Consensus Networks \cite{Holland2004} or Neighbor-Nets \cite{Bryant2004}. This can be either done using the consensusNet or neighbor-net function in \CRANpkg{phangorn}\cite{Schliep2011} or by importing nexus files from SplitsTree \cite{Huson2006}.
-
-We first load the necessary libraries and read in a splits graph
+We first load the necessary libraries and read in a split graph:
 <<>>=
 library(phangorn)
 library(ggnetworx)
@@ -58,7 +54,7 @@ fdir <- system.file("extdata/trees", package = "phangorn")
 Nnet <- read.nexus.networx(file.path(fdir,"woodmouse.nxs"))
 @
 
-We can plot a splits graph using:
+We can plot a split graph using:
 <<>>=
 ggnetworx(Nnet) + geom_tiplab2()
 @
@@ -69,10 +65,10 @@ ggnetworx(Nnet) + geom_point(aes(shape=isTip, color=isTip), size=3)
 @
 
 
-\section{Plotting reticulation networks}
+\section{Plotting Reticulation Networks}
 
-The function \Rfunction{ggevonet} plots phylogenetic trees with reticulation.
-A recent addition to \CRANpkg{ape}\cite{Paradis2018}  made it possible
+The function \Rfunction{ggevonet} plots phylogenetic trees with reticulations.
+A recent addition to \CRANpkg{ape} \cite{Paradis2018}  made it possible
 to read in trees in extended newick format \cite{Cardona2008}.
 
 <<>>=
@@ -86,7 +82,7 @@ ggevonet(z, aes(color=hybridEdge), "slanted") + geom_tiplab() + geom_nodelab()
 
 \section{Summary}
 
-The splits graph should take most of the functions which go with unrooted
+The split graphs should take most of the functions compatible with unrooted
 trees in ggtree. The reticulation graphs are phylogram or slanted.
 Not all options may work as intended yet.
 
