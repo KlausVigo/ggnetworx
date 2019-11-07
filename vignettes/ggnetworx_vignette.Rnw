@@ -13,11 +13,9 @@ suppressPackageStartupMessages(library(phangorn))
 @
 
 %%% TO DO (Later) %%%
-% Change 'ggnetworx' to 'ggsplitnet'
-%
+% Change package name?
 %
 %%%%%%%%%%%%%%%%%%%%%
-
 
 \begin{document}
 <<setup, include=FALSE, cache=FALSE>>=
@@ -56,12 +54,12 @@ Nnet <- read.nexus.networx(file.path(fdir,"woodmouse.nxs"))
 
 We can plot a split network using:
 <<>>=
-ggnetworx(Nnet) + geom_tiplab2()
+ggsplitnet(Nnet) + geom_tiplab2()
 @
 
 Nodes can be annotated with $geom\_point$.
 <<>>=
-ggnetworx(Nnet) + geom_point(aes(shape=isTip, color=isTip), size=3)
+ggsplitnet(Nnet) + geom_point(aes(shape=isTip, color=isTip), size=3)
 @
 
 
