@@ -2,7 +2,12 @@ Package: ggnetworx
 Type: Package
 Title: Visualization of Phylogenetic Networks
 Version: 0.99.0
-Authors@R: c(person("Klaus", "Schliep", email="klaus.schliep@gmail.com", role = c("aut", "cre")),
+Authors@R: c(person("Klaus", "Schliep", email="klaus.schliep@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-2941-0161")),
+             person("Marta", "Vidal-Garcia", role="aut"), 
+             person("Claudia", "Solis-Lemus", role="aut"), 
+             person("Leann", "Biancani", role="aut"), 
+             person("Eren", "Ada", role="aut"), 
+             person("L. Francisco", "Henao Diaz", role="aut"), 
              person("Guangchuang", "Yu", role = c("ctb")))
 Author: Klaus Schliep <klaus.schliep@gmail.com>
 Maintainer: Klaus Schliep <klaus.schliep@gmail.com>
