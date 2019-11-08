@@ -5,6 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{url}
+\usepackage{enumerate}
 
 <<style-knitr, eval=TRUE, echo=FALSE, results="asis">>=
 BiocStyle::latex()
@@ -13,7 +14,7 @@ suppressPackageStartupMessages(library(phangorn))
 @
 
 %%% TO DO (Later) %%%
-% Change package name?
+% Change package name from ggnetworx to tanggle.
 %
 %%%%%%%%%%%%%%%%%%%%%
 
@@ -35,10 +36,8 @@ University of Massachusetts Boston}
 \newpage
 \section{Introduction}
 \Biocpkg{ggnetworx} extends the \Biocpkg{ggtree} \cite{Yu2017} package to allow
-visualization of several types of phylogentic networks using the \CRANpkg{ggplot2} \cite{Wickham2016} syntax.
-More specifically, \Biocpkg{ggnetworx} contains functions
-to plot split networks (unrooted, undirected) and explicit networks (rooted, directed) with reticulations. It offers an alternative to the plot functions already available
-in \CRANpkg{ape} and \CRANpkg{phangorn}.
+for the visualization of several types of phylogentic networks using the \CRANpkg{ggplot2} \cite{Wickham2016} syntax.
+More specifically, \Biocpkg{ggnetworx} contains functions to plot split (or implicit) networks (unrooted, undirected) and explicit networks (rooted, directed) with reticulations. It offers an alternative to the plot functions already available in \CRANpkg{ape} and \CRANpkg{phangorn}.
 
 \section{Getting Started}
 
@@ -50,21 +49,33 @@ library(ggnetworx)
 
 \section{Split Networks}
 
-Split networks allow for the definition of non-compatible splits and are most often used to visualize consensus networks \cite{Holland2004} or neighbor-nets \cite{Bryant2004}. This can be done either by using the consensusNet or neighbor-net functions in \CRANpkg{phangorn} \cite{Schliep2011} or by importing nexus files from SplitsTree \cite{Huson2006}.
+Split networks are data-display objects which allow for the definition of 2 (or more) options for non-compatible splits.
+Slit networks are most often used to visualize consensus networks \cite{Holland2004} or neighbor-nets \cite{Bryant2004}. This can be done either by using the consensusNet or neighbor-net functions in \CRANpkg{phangorn} \cite{Schliep2011} or by importing nexus files from SplitsTree \cite{Huson2006}.
 
 \subsection{Data Types}
 
-\Biocpkg{ggnetworx} accepts the following three forms of input data for split networks:
-
-Nexus files from SplitsTree \cite{Huson2006} read.nexus.networx \CRANpkg{phangorn}
+\Biocpkg{ggnetworx} accepts three forms of input data for split networks. The following input options all generate a $networx$ object for plotting.
+\begin{enumerate}
+	\item Nexus file created with SplitsTree \cite{Huson2006} and read with the $read.nexus.network$ function in \CRANpkg{phangorn}.
+	<<>>=
+    ## read in a split network in nexus format:
+    fdir <- system.file("extdata/trees", package = "phangorn")
+    Nnet <- read.nexus.networx(file.path(fdir,"woodmouse.nxs"))
+    @
+	\item A collection of gene trees (e.g.~from RAxML \cite{Stamatakis2014RAxML}) in one of the following formats:
+	\begin{itemize}
+	    \item Nexus file read with the function $read.nexus$
+	    \item Text file in Newick format (one gene tree per line) read with the function $read.tree$
+	\end {itemize}
+	A consensus split network is then computed using the function $consensusNet$ in \CRANpkg{phangorn}.
+	\item Sequences in nexus, fasta or phylip format read with the function $read.phyDat$ in \CRANpkg{phangorn} or the function $read.dna$ in \CRANpkg{ape}. Distances matrices are then computed for specific models of evolution using the function $dist.ml$ in \CRANpkg{phangorn} or $dist.dna$ in \CRANpkg{ape}. From the distance matrix, a split network is reconstructed using the function $neighborNet$ in \CRANpkg{phangorn}. Optional: branch lengths may be estimated using the function $splitsNetworks$ in \CRANpkg{phangorn}.
+\end{enumerate}
 
 \subsection{Plotting a Split Network}
 
 Plot a split network:
 <<>>=
-## read in an example split network:
-fdir <- system.file("extdata/trees", package = "phangorn")
-Nnet <- read.nexus.networx(file.path(fdir,"woodmouse.nxs"))
+
 ## plot a split network:
 ggsplitnet(Nnet) + geom_tiplab2()
 @
