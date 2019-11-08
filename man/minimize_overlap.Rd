@@ -5,13 +5,13 @@
 \title{minimize_overlap
 reduces reticulation lines crossing over in plots}
 \usage{
-minimize_overlap(tree)
+minimize_overlap(x)
 }
 \arguments{
-\item{x}{Tree of class 'evonet' 'phylo'}
+\item{x}{Tree of class 'evonet'}
 }
 \value{
-A Tree with rotated nodes of class 'evonet' 'phylo'
+A Tree with rotated nodes of class 'evonet'
 }
 \description{
 minimize_overlap
@@ -19,7 +19,10 @@ reduces reticulation lines crossing over in plots
 }
 \examples{
 fishnet <- ape::read.evonet(text = "(Xalvarezi,Xmayae,((Xsignum,((Xmonticolus,(Xclemenciae_F2,#H25:::0.032485577051040423):0.979116879342896):1.4858786525152954,(((((((((Xgordoni,Xmeyeri):0.26111415598145865,Xcouchianus):3.5325554148283564,Xvariatus):0.6445452395880061,Xevelynae):0.41219807813960146,(Xxiphidium,#H24:0.0::0.16538333427567822):1.4020042304402076):0.2921320715527958,Xmilleri):0.4688709909949548,Xandersi):0.6492623942884177,Xmaculatus):1.0200542801748702,(((Xmontezumae,(Xcortezi,(Xbirchmanni_GARC,Xmalinche_CHIC2):0.8943004029517725):0.6903622798656042):0.4926275928330048,((Xnigrensis,Xmultilineatus):1.4508210422790195,(Xpygmaeus,Xcontinens):1.9686498919562234):2.428065080719157):2.0435103751744865)#H24:0.6476450483433508::0.8346166657243218):0.7816554661308311):1.9841381634366537):0.31614675520900004,(Xhellerii)#H25:::0.9675144229489596):0.28226883225049243);")
+fishnet$edge.length <- NULL
 new_tre <- minimize_overlap(fishnet)
+
+\dontrun{
 par(mfrow = c(1,2))
 plot(fishnet, arrows = 2, cex = .4, no.margin = T, type = "c")
 plot(new_tre, arrows = 2, cex = .4, no.margin = T, type = "c")
@@ -28,6 +31,8 @@ fishnet2 <- ape::read.evonet(text = "(15,(1,((14,(#H1,(((12,13),(11,#H3)),(7,((1
 new_tre2 <- minimize_overlap(fishnet2)
 plot(fishnet2, arrows = 2, cex = .4, no.margin = T, type = "c")
 plot(new_tre2, arrows = 2, cex = .4, no.margin = T, type = "c")
+}
+
 }
 \author{
 L. Francisco Henao Diaz
