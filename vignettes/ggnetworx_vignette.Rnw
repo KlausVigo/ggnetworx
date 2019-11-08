@@ -12,6 +12,10 @@ suppressPackageStartupMessages(library(ggtree))
 suppressPackageStartupMessages(library(phangorn))
 @
 
+%%% TO DO (Later) %%%
+% Change package name?
+%
+%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 <<setup, include=FALSE, cache=FALSE>>=
@@ -30,59 +34,70 @@ University of Massachusetts Boston}
 
 \newpage
 \section{Introduction}
-\Biocpkg{ggnetworx} extends the \Biocpkg{ggtree}\cite{Yu2017} package to allow
-visualize several types of phylogentic networks using the \CRANpkg{ggplot2}
-\cite{Wickham2016} syntax.
-More specific \Biocpkg{ggnetworx} contains function
-to plot (unrooted, undirected) splits graphs and (directed, rooted) trees with
-reticulations. It offers an alternative to the plot functions already available
+\Biocpkg{ggnetworx} extends the \Biocpkg{ggtree} \cite{Yu2017} package to allow
+visualization of several types of phylogentic networks using the \CRANpkg{ggplot2} \cite{Wickham2016} syntax.
+More specifically, \Biocpkg{ggnetworx} contains functions
+to plot split networks (unrooted, undirected) and explicit networks (rooted, directed) with reticulations. It offers an alternative to the plot functions already available
 in \CRANpkg{ape} and \CRANpkg{phangorn}.
 
-\section{Splits graphs}
-Splits graph allow to non-compatible splits definition and are most often
-used to visualize Consensus Networks \cite{Holland2004} or Neighbor-Nets
-\cite{Bryant2004}. This can be either done using the consensusNet or neighbor-net
-function in \CRANpkg{phangorn}\cite{Schliep2011} or by importing nexus files
-from SplitsTree \cite{Huson2006}.
+\section{Getting Started}
 
-We first read the necessary libraries and read in a splits graph
+Load the necessary libraries:
 <<>>=
 library(phangorn)
 library(ggnetworx)
+@
+
+\section{Split Networks}
+
+Split networks allow for the definition of non-compatible splits and are most often used to visualize consensus networks \cite{Holland2004} or neighbor-nets \cite{Bryant2004}. This can be done either by using the consensusNet or neighbor-net functions in \CRANpkg{phangorn} \cite{Schliep2011} or by importing nexus files from SplitsTree \cite{Huson2006}.
+
+\subsection{Data Types}
+
+\Biocpkg{ggnetworx} accepts the following three forms of input data for split networks:
+
+Nexus files from SplitsTree \cite{Huson2006} read.nexus.networx \CRANpkg{phangorn}
+
+\subsection{Plotting a Split Network}
+
+Plot a split network:
+<<>>=
+## read in an example split network:
 fdir <- system.file("extdata/trees", package = "phangorn")
 Nnet <- read.nexus.networx(file.path(fdir,"woodmouse.nxs"))
+## plot a split network:
+ggsplitnet(Nnet) + geom_tiplab2()
 @
 
-We can plot a splits graph using:
+Nodes can be annotated with $geom\_point$.
 <<>>=
-ggnetworx(Nnet) + geom_tiplab2()
-@
-Nodes can be annotated with $geom_point$.
-<<>>=
-ggnetworx(Nnet) + geom_point(aes(shape=isTip, color=isTip), size=3)
+ggsplitnet(Nnet) + geom_point(aes(shape=isTip, color=isTip), size=3)
 @
 
 
-\section{Plotting reticulation networks}
+\section{Plotting Explicit Networks}
 
-The function \Rfunction{ggevonet} plots phylogenetic trees with reticulation.
-A recent addition to the \CRANpkg{ape}\cite{Paradis2018}  made it possible
+The function \Rfunction{ggevonet} plots explicit networks (phylogenetic trees with reticulations).
+A recent addition to \CRANpkg{ape} \cite{Paradis2018}  made it possible
 to read in trees in extended newick format \cite{Cardona2008}.
 
 <<>>=
-## from Fig. 2 in Cardona et al. 2008:
-z <- read.evonet(text =
-         "((1,((2,(3,(4)Y#H1)g)e,(((Y#H1, 5)h,6)f)X#H2)c)a,((X#H2,7)d,8)b)r;")
-ggevonet(z, aes(color=hybridEdge)) + geom_tiplab() + geom_nodelab()
+## read in an explicit network (example from Fig. 2 in Cardona et al. 2008):
+z <- read.evonet(text = "((1,((2,(3,(4)Y#H1)g)e,(((Y#H1,5)h,6)f)X#H2)c)a,((X#H2,7)d,8)b)r;")
 
-ggevonet(z, aes(color=hybridEdge), "slanted") + geom_tiplab() + geom_nodelab()
+## plot an explicit network:
+ggevonet(z) + geom_tiplab() + geom_nodelab()
+p <- ggevonet(z, layout = "slanted") + geom_tiplab() + geom_nodelab()
+p + geom_tiplab(size=3, color="purple")
+p + geom_nodepoint(color="#b5e521", alpha=1/4, size=10)
+
 @
 
 \section{Summary}
 
-The splits graph should take most of the functions which go with unrooted
-trees in ggtree. The reticulation graphs are phylogram or slanted.
-Not all options may not work as intended yet.
+The split network plots should take most of the functions compatible with unrooted
+trees in ggtree. The explicit network plots are phylogram or slanted.
+Not all options may work as intended yet.
 
 \url{https://bioconductor.org/packages/devel/bioc/vignettes/ggtree/inst/doc/treeVisualization.html}
 
