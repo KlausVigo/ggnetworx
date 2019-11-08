@@ -10,10 +10,20 @@ ggnetworx
 
 ggnetworx provides function to plot phylogenetic networks of class `evonet` from *ape* and split graphs of class `networx` from *phangorn*.
 
-You can install `devtools::install_github("KlausVigo/ggnetworx")`
+You can install `remotes::install_github("KlausVigo/ggnetworx")`
 
+To install *ggnetworx* you may need to install the *ggtree* package from bioconductor first:
+```
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ggtree")
+```
 
 If you use ggnetworx please cite:
+
+Paradis E. & Schliep K. 2018. ape 5.0: an environment for modern phylogenetics 
+and evolutionary analyses in R. Bioinformatics 35: 526-528.
 
 Schliep K.P. 2011. phangorn: phylogenetic analysis in R. Bioinformatics, 27(4) 592-593
 
