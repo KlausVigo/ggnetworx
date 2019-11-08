@@ -81,12 +81,11 @@ ggevonet <- function (tr, mapping=NULL, layout="slanted", open.angle=0,
     else {
         mapping <- modifyList(aes_(~x, ~y), mapping)
     }
-    mapping <- modifyList(aes(color = hybridEdge), mapping)
+    mapping <- modifyList(aes(linetype = hybridEdge), mapping)
     p <- ggplot(tr, mapping=mapping, layout=layout, mrsd=mrsd, as.Date=as.Date,
                 yscale=yscale, yscale_mapping=yscale_mapping,
                 ladderize=ladderize, right=right, branch.length=branch.length,
-                ndigits=ndigits, ...) +
-          scale_color_manual(values = c('#000000', '#339900'))
+                ndigits=ndigits, ...)
 
     p <- p + geom_tree2(layout=layout, ...)
     p <- p + theme_tree(legend.position="none")
