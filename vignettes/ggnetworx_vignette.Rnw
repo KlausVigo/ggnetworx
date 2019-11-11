@@ -5,6 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{url}
+\usepackage{enumerate}
 
 <<style-knitr, eval=TRUE, echo=FALSE, results="asis">>=
 BiocStyle::latex()
@@ -12,6 +13,10 @@ suppressPackageStartupMessages(library(ggtree))
 suppressPackageStartupMessages(library(phangorn))
 @
 
+%%% TO DO (Later) %%%
+% Change package name from ggnetworx to tanggle.
+%
+%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 <<setup, include=FALSE, cache=FALSE>>=
@@ -30,59 +35,80 @@ University of Massachusetts Boston}
 
 \newpage
 \section{Introduction}
-\Biocpkg{ggnetworx} extends the \Biocpkg{ggtree}\cite{Yu2017} package to allow
-visualize several types of phylogentic networks using the \CRANpkg{ggplot2}
-\cite{Wickham2016} syntax.
-More specific \Biocpkg{ggnetworx} contains function
-to plot (unrooted, undirected) splits graphs and (directed, rooted) trees with
-reticulations. It offers an alternative to the plot functions already available
-in \CRANpkg{ape} and \CRANpkg{phangorn}.
+\Biocpkg{ggnetworx} extends the \Biocpkg{ggtree} \cite{Yu2017} package to allow
+for the visualization of several types of phylogentic networks using the \CRANpkg{ggplot2} \cite{Wickham2016} syntax.
+More specifically, \Biocpkg{ggnetworx} contains functions to plot split (or implicit) networks (unrooted, undirected) and explicit networks (rooted, directed) with reticulations. It offers an alternative to the plot functions already available in \CRANpkg{ape} and \CRANpkg{phangorn}.
 
-\section{Splits graphs}
-Splits graph allow to non-compatible splits definition and are most often
-used to visualize Consensus Networks \cite{Holland2004} or Neighbor-Nets
-\cite{Bryant2004}. This can be either done using the consensusNet or neighbor-net
-function in \CRANpkg{phangorn}\cite{Schliep2011} or by importing nexus files
-from SplitsTree \cite{Huson2006}.
+\section{Getting Started}
 
-We first read the necessary libraries and read in a splits graph
+Load the necessary libraries:
 <<>>=
 library(phangorn)
 library(ggnetworx)
-fdir <- system.file("extdata/trees", package = "phangorn")
-Nnet <- read.nexus.networx(file.path(fdir,"woodmouse.nxs"))
 @
 
-We can plot a splits graph using:
+\section{Split Networks}
+
+Split networks are data-display objects which allow for the definition of 2 (or more) options for non-compatible splits.
+Slit networks are most often used to visualize consensus networks \cite{Holland2004} or neighbor-nets \cite{Bryant2004}. This can be done either by using the consensusNet or neighbor-net functions in \CRANpkg{phangorn} \cite{Schliep2011} or by importing nexus files from SplitsTree \cite{Huson2006}.
+
+\subsection{Data Types}
+
+\Biocpkg{ggnetworx} accepts three forms of input data for split networks. The following input options all generate a $networx$ object for plotting.
+\begin{enumerate}
+	\item Nexus file created with SplitsTree \cite{Huson2006} and read with the $read.nexus.network$ function in \CRANpkg{phangorn}.
+	<<>>=
+    ## read in a split network in nexus format:
+    fdir <- system.file("extdata/trees", package = "phangorn")
+    Nnet <- read.nexus.networx(file.path(fdir,"woodmouse.nxs"))
+    @
+	\item A collection of gene trees (e.g.~from RAxML \cite{Stamatakis2014RAxML}) in one of the following formats:
+	\begin{itemize}
+	    \item Nexus file read with the function $read.nexus$
+	    \item Text file in Newick format (one gene tree per line) read with the function $read.tree$
+	\end {itemize}
+	A consensus split network is then computed using the function $consensusNet$ in \CRANpkg{phangorn}.
+	\item Sequences in nexus, fasta or phylip format read with the function $read.phyDat$ in \CRANpkg{phangorn} or the function $read.dna$ in \CRANpkg{ape}. Distances matrices are then computed for specific models of evolution using the function $dist.ml$ in \CRANpkg{phangorn} or $dist.dna$ in \CRANpkg{ape}. From the distance matrix, a split network is reconstructed using the function $neighborNet$ in \CRANpkg{phangorn}. Optional: branch lengths may be estimated using the function $splitsNetworks$ in \CRANpkg{phangorn}.
+\end{enumerate}
+
+\subsection{Plotting a Split Network}
+
+Plot a split network:
 <<>>=
-ggnetworx(Nnet) + geom_tiplab2()
+
+## plot a split network:
+ggsplitnet(Nnet) + geom_tiplab2()
 @
-Nodes can be annotated with $geom_point$.
+
+Nodes can be annotated with $geom\_point$.
 <<>>=
-ggnetworx(Nnet) + geom_point(aes(shape=isTip, color=isTip), size=3)
+ggsplitnet(Nnet) + geom_point(aes(shape=isTip, color=isTip), size=3)
 @
 
 
-\section{Plotting reticulation networks}
+\section{Plotting Explicit Networks}
 
-The function \Rfunction{ggevonet} plots phylogenetic trees with reticulation.
-A recent addition to the \CRANpkg{ape}\cite{Paradis2018}  made it possible
+The function \Rfunction{ggevonet} plots explicit networks (phylogenetic trees with reticulations).
+A recent addition to \CRANpkg{ape} \cite{Paradis2018}  made it possible
 to read in trees in extended newick format \cite{Cardona2008}.
 
 <<>>=
-## from Fig. 2 in Cardona et al. 2008:
-z <- read.evonet(text =
-         "((1,((2,(3,(4)Y#H1)g)e,(((Y#H1, 5)h,6)f)X#H2)c)a,((X#H2,7)d,8)b)r;")
-ggevonet(z, aes(color=hybridEdge)) + geom_tiplab() + geom_nodelab()
+## read in an explicit network (example from Fig. 2 in Cardona et al. 2008):
+z <- read.evonet(text = "((1,((2,(3,(4)Y#H1)g)e,(((Y#H1,5)h,6)f)X#H2)c)a,((X#H2,7)d,8)b)r;")
 
-ggevonet(z, aes(color=hybridEdge), "slanted") + geom_tiplab() + geom_nodelab()
+## plot an explicit network:
+ggevonet(z) + geom_tiplab() + geom_nodelab()
+p <- ggevonet(z, layout = "slanted") + geom_tiplab() + geom_nodelab()
+p + geom_tiplab(size=3, color="purple")
+p + geom_nodepoint(color="#b5e521", alpha=1/4, size=10)
+
 @
 
 \section{Summary}
 
-The splits graph should take most of the functions which go with unrooted
-trees in ggtree. The reticulation graphs are phylogram or slanted.
-Not all options may not work as intended yet.
+The split network plots should take most of the functions compatible with unrooted
+trees in ggtree. The explicit network plots are phylogram or slanted.
+Not all options may work as intended yet.
 
 \url{https://bioconductor.org/packages/devel/bioc/vignettes/ggtree/inst/doc/treeVisualization.html}
 

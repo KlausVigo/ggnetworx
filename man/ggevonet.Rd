@@ -4,7 +4,7 @@
 \alias{ggevonet}
 \title{ggevonet}
 \usage{
-ggevonet(tr, mapping = NULL, layout = "rectangular", open.angle = 0,
+ggevonet(tr, mapping = NULL, layout = "slanted", open.angle = 0,
   mrsd = NULL, as.Date = FALSE, yscale = "none",
   yscale_mapping = NULL, ladderize = FALSE, right = FALSE,
   branch.length = "branch.length", ndigits = NULL, ...)

@@ -1,0 +1,44 @@
+---
+title: "tanggle_annotation"
+author: "Eren Ada"
+date: "11/8/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+## tanggle usage examples
+
+You can use "tanggle" with other tree visualization packages such as ggimage. Here is an example phylogenetic network with images:
+
+
+Calling neccessery packages/libraries:
+```{r message=FALSE, warning=FALSE}
+library(ape)
+library(ggtree)
+library(ggimage)
+library(ggnetworx)
+```
+
+
+
+Reading/creating networks
+```{r warning=FALSE}
+whalesnet = read.evonet(text="(((balMys,Egl00):9.055782863234407)#H13:2.6340479153169807::0.8331903627712247,(Bac00,(((Bbo01,Bbo02):9.41949690722463,(Bmu,#H:0.0::0.013010091110208823)):1.6484045144986545,((#H13:0.19346605673125924::0.16680963722877526,((Erob02,Erob01):1.7595289284120899)#H:8.238071084864815::0.9869899088897912):0.35164828246609625,(Mno00,Bph03):2.146642742731017):0.066043783465627):1.100383484076166):2.6340479153169807);")
+```
+
+Creating species names/labels
+```{r warning=FALSE}
+label <- whalesnet$tip.label 
+```
+
+```{r message=FALSE, warning=FALSE}
+ggevonet(whalesnet,layout = "slanted") +
+    xlim(NA, 10)  + 
+    geom_tiplab(aes(image=paste0(label, '.png')), geom="image", offset=2, align=1.5, size=.15) +
+    geom_tiplab(geom='label', offset=.5, hjust=.1)
+```
