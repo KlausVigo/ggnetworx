@@ -19,11 +19,12 @@ Depends:
 Imports: 
     magrittr,
     ape (>= 5.0), 
-    phangorn (>= 2.1)
+    phangorn (>= 2.5)
 Suggests:
     vdiffr, 
     testthat, 
-    BiocStyle, 
+    BiocStyle,
+    ggimage,
     knitr
 VignetteBuilder: knitr    
 License: AGPL (>= 3)
