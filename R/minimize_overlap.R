@@ -15,7 +15,9 @@
 #' plot(fishnet, arrows = 2, cex = .4, no.margin = T, type = "c")
 #' plot(new_tre, arrows = 2, cex = .4, no.margin = T, type = "c")
 #'
-#' fishnet2 <- ape::read.evonet(text = "(15,(1,((14,(#H1,(((12,13),(11,#H3)),(7,((10)#H3,(8,9)))))),((((2,3))#H2,(6,(5,(#H2,4)))))#H1)));") # Cui et al. 2013 Evol.
+#' fishnet2 <- ape::read.evonet(text = "(15,(1,((14,(#H1,(((12,13),(11,#H3)),(7,
+#'    ((10)#H3,(8,9)))))),((((2,3))#H2,(6,(5,(#H2,4)))))#H1)));")
+#' # Cui et al. 2013 Evol.
 #' new_tre2 <- minimize_overlap(fishnet2)
 #' plot(fishnet2, arrows = 2, cex = .4, no.margin = T, type = "c")
 #' plot(new_tre2, arrows = 2, cex = .4, no.margin = T, type = "c")
@@ -31,7 +33,8 @@ minimize_overlap <- function(x){
         best_r <- sum(abs(h[x$reticulation[,1]]- h[x$reticulation[,2]]))
         best_c <- -1
 #        r_hist[j] <- best_r
-        nodes2rot <- intersect(sort(unique(unlist(Ancestors(x, c(x$reticulation))))), which(tabulate(x$edge[,1]) > 1) )
+        nodes2rot <- intersect(sort(unique(unlist(Ancestors(x,
+                        c(x$reticulation))))), which(tabulate(x$edge[,1]) > 1) )
         for(i in seq_along(nodes2rot)){
             nh <- node.height(ape::rotate(x, nodes2rot[i]))
             best_nr <- sum(abs(nh[x$reticulation[,1]] - nh[x$reticulation[,2]]))

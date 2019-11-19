@@ -1,10 +1,15 @@
 ---
-title: "tanggle_annotation"
+title: "tanggle annotation"
 author: "Eren Ada"
-date: "11/8/2019"
-output: html_document
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: rmarkdown::html_vignette
+bibliography: ggnetworx.bib
 editor_options: 
   chunk_output_type: console
+vignette: >
+   %\VignetteIndexEntry{tanggle annotation}
+   %\VignetteEngine{knitr::rmarkdown}
+   %\usepackage[utf8]{inputenc}   
 ---
 
 ```{r message=FALSE, warning=FALSE}
