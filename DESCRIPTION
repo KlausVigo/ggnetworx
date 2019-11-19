@@ -9,17 +9,16 @@ Authors@R: c(person("Klaus", "Schliep", email="klaus.schliep@gmail.com", role = 
              person("Eren", "Ada", role="aut"), 
              person("L. Francisco", "Henao Diaz", role="aut"), 
              person("Guangchuang", "Yu", role = c("ctb")))
-Author: Klaus Schliep <klaus.schliep@gmail.com>
-Maintainer: Klaus Schliep <klaus.schliep@gmail.com>
 Description: 'ggplot2' like system to plot phylogentic networks from 'ape' and 'phangorn'.
 Depends:
-    R (>= 3.3.0),
+    R (>= 3.6),
     ggplot2 (>= 2.2.0),
     ggtree
 Imports: 
     magrittr,
     ape (>= 5.0), 
-    phangorn (>= 2.5)
+    phangorn (>= 2.5),
+    utils
 Suggests:
     vdiffr, 
     testthat, 
@@ -27,6 +26,7 @@ Suggests:
     ggimage,
     knitr
 VignetteBuilder: knitr    
+biocViews: Software
 License: AGPL (>= 3)
 URL: https://github.com/KlausVigo/ggnetworx
 BugReports: https://github.com/KlausVigo/ggnetworx/issues

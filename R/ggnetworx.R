@@ -1,13 +1,12 @@
+#' @importFrom magrittr %>%
+#' @export
+magrittr::'%>%'
 
-##' @method fortify evonet
-##' @importFrom ggplot2 fortify
-##' @export
-fortify.evonet <- function(model, data,
-                           layout   ="rectangular",
-                           ladderize=FALSE,
-                           right    =FALSE,
-                           mrsd     =NULL,
-                           as.Date  =FALSE, ...){
+#' @method fortify evonet
+#' @importFrom ggplot2 fortify
+#' @export
+fortify.evonet <- function(model, data, layout="rectangular", ladderize=FALSE,
+                    right=FALSE, mrsd=NULL, as.Date  =FALSE, ...){
     class(model) <- "phylo"
 #  ggtree:::fortify.phylo
     df <- fortify(model, ladderize=ladderize)
@@ -46,7 +45,6 @@ fortify.evonet <- function(model, data,
 #' @param ... additional parameter
 #' @return tree
 #' @seealso \code{\link[ape]{evonet}}, \code{\link[ggtree]{ggtree}}
-## @importFrom magrittr %<>%
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 xlab
 #' @importFrom ggplot2 ylab
@@ -67,9 +65,9 @@ fortify.evonet <- function(model, data,
 #' ggevonet(enet) + geom_tiplab()
 #' @export
 ggevonet <- function (tr, mapping=NULL, layout="slanted", open.angle=0,
-          mrsd=NULL, as.Date=FALSE, yscale="none", yscale_mapping=NULL,
-          ladderize=FALSE, right=FALSE, branch.length="branch.length",
-          ndigits=NULL, min_crossing=TRUE, ...)
+            mrsd=NULL, as.Date=FALSE, yscale="none", yscale_mapping=NULL,
+            ladderize=FALSE, right=FALSE, branch.length="branch.length",
+            ndigits=NULL, min_crossing=TRUE, ...)
 {
     layout <- match.arg(layout, c("rectangular", "slanted"))
 # , "fan", "circular", "radial", "unrooted", "equal_angle", "daylight"
@@ -103,33 +101,27 @@ ggevonet <- function (tr, mapping=NULL, layout="slanted", open.angle=0,
 }
 
 
-##' @method fortify networx
-##' @importFrom phangorn getRoot
-##' @export
-fortify.networx <- function(model, data,
-                           layout   ="unrooted",
-                           ladderize=FALSE,
-                           right    =FALSE,
-                           mrsd     =NULL,
-                           as.Date  =FALSE, ...){
-#    root <- getRoot(model)
+#' @method fortify networx
+#' @importFrom phangorn getRoot
+#' @export
+fortify.networx <- function(model, data, layout="unrooted", ladderize=FALSE,
+                            right=FALSE, mrsd=NULL, as.Date=FALSE, ...){
+##    root <- getRoot(model)
     nTips <- length(model$tip.label)
     label <- character(nrow(model$edge))
-    isTip <- logical(nrow(model$edge))  # edge leading to tip
-    # 1:nTips may not correspond to tips
+    isTip <- logical(nrow(model$edge))  ## edge leading to tip
     if(!is.null(model$translate)){
         ind <- match(model$translate$node, model$edge[,2])
         label[ind] <- model$translate$label
     }
     else{
-        ind <- match(1:nTips, model$edge[,2])
+        ind <- match(seq_len(nTips), model$edge[,2])
         label[ind] <- model$tip.label
     }
     isTip[ind] <- TRUE
     df <- data.frame(node=model$edge[,2], parent=model$edge[,1],
-                     branch.length=model$edge.length,
-                     split=model$splitIndex,
-                     label=label, isTip=isTip)
+                    branch.length=model$edge.length, split=model$splitIndex,
+                    label=label, isTip=isTip)
     if(!is.null(model$.plot)) coord <- model$.plot$vertices
     else coord <- coords(model, dim="2D")
     df <- cbind(df, x=coord[df$node,1], y=coord[df$node,2],
@@ -137,7 +129,6 @@ fortify.networx <- function(model, data,
     angle <- atan2(df$y - df$yend, df$x - df$xend) * 360 / (2*pi)
     angle[angle<0] <- angle[angle<0] + 360
     df <- cbind(df, angle=angle)
-#    rownames(df) <- 1:nrow(df)
     df
 }
 
@@ -167,7 +158,6 @@ fortify.networx <- function(model, data,
 #' (2017), Intertwining phylogenetic trees and networks.
 #' \emph{Methods Ecol Evol}. \bold{8}, 1212--1220. doi:10.1111/2041-210X.12760
 #' @importFrom utils modifyList
-## @importFrom magrittr %<>%
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 xlab
 #' @importFrom ggplot2 ylab
@@ -232,38 +222,14 @@ geom_tree3 <- function(layout="rectangular", ...) {
     lineend <- "round"
     if (layout == "rectangular" || layout == "fan" || layout == "circular") {
         list(
-            geom_segment(aes(x    = x,
-                             xend = xend,
-                             y    = y,
-                             yend = y),
-                         lineend  = lineend, ...),
-
-            geom_segment(aes(x    = xend,
-                             xend = xend,
-                             y    = y,
-                             yend = yend),
-                         lineend  = lineend, ...)
+            geom_segment(aes(x=x, xend=xend, y=y, yend=y),
+                        lineend=lineend, ...),
+            geom_segment(aes(x=xend, xend=xend, y=y, yend=yend),
+                        lineend=lineend, ...)
         )
     } else if (layout == "slanted" || layout == "radial" ||
-               layout == "unrooted") {
-        geom_segment(aes(x    = x,
-                         xend = xend,
-                         y    = y,
-                         yend = yend),
-                     lineend  = lineend, ...)
+                layout == "unrooted") {
+        geom_segment(aes(x=x, xend=xend, y=y, yend=yend),
+                    lineend  = lineend, ...)
     }
 }
-
-
-
-##' pipe
-##' @importFrom magrittr %>%
-##' @name %>%
-##' @export
-##' @rdname pipe
-##' @param lhs left hand side
-##' @param rhs right hand side
-##' @usage lhs \%>\% rhs
-##' @seealso
-##' \link[magrittr]{pipe}
-NULL
