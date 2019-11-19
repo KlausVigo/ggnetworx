@@ -28,7 +28,7 @@ minimize_overlap <- function(x){
     if(class(x)[1]!='evonet') stop("x should be an 'evonet' class")
     n_iter <- round(x$Nnode*3/4)
 #    r_hist <- c()
-    for(j in 1:n_iter){
+    for(j in seq_len(n_iter)){
         h <- node.height(x)
         best_r <- sum(abs(h[x$reticulation[,1]]- h[x$reticulation[,2]]))
         best_c <- -1

@@ -10,16 +10,12 @@ node_depth_evonet <- function(x, ...){
    pa <- vector("list", max_nodes)
    ind <- which(x$edge[,2] > Ntip(x))
    pa[x$edge[ind,2]] <- x$edge[ind,1]
-
-# maximal 2 hybrid-parents
-
    for(i in seq_len(nrow(x$reticulation))){
-      pa[[x$reticulation[i,2]]] <- sort( c(pa[[x$reticulation[i,2]]], x$reticulation[i,1] ) )
-#       pa[[x$reticulation[i,2]]] <- sort( c(pa[[x$reticulation[i,2]]], pa[[x$reticulation[i,1] ]]) )
+      pa[[x$reticulation[i,2]]] <- sort( c(pa[[x$reticulation[i,2]]],
+                                           x$reticulation[i,1] ) )
 #       pa[[x$reticulation[i,1] ]] <- numeric(0)
    }
    ind <- which(lengths(pa) > 0)
-   # todo check if there are cycles
    depth <- numeric(max_nodes)
    depth[root] <- 1
    done <- logical(max_nodes)
