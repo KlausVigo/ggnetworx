@@ -7,7 +7,8 @@
 ggevonet(tr, mapping = NULL, layout = "slanted", open.angle = 0,
   mrsd = NULL, as.Date = FALSE, yscale = "none",
   yscale_mapping = NULL, ladderize = FALSE, right = FALSE,
-  branch.length = "branch.length", ndigits = NULL, ...)
+  branch.length = "branch.length", ndigits = NULL,
+  min_crossing = TRUE, ...)
 }
 \arguments{
 \item{tr}{phylo object}
@@ -33,6 +34,8 @@ ggevonet(tr, mapping = NULL, layout = "slanted", open.angle = 0,
 \item{branch.length}{variable for scaling branch, if 'none' draw cladogram}
 
 \item{ndigits}{number of digits to round numerical annotation variable}
+
+\item{min_crossing}{logical, rotate clades to minimize crossings}
 
 \item{...}{additional parameter}
 }

@@ -25,14 +25,14 @@
 minimize_overlap <- function(x){
     if(class(x)[1]!='evonet') stop("x should be an 'evonet' class")
     n_iter <- round(x$Nnode*3/4)
-    r_hist <- c()
+#    r_hist <- c()
     for(j in 1:n_iter){
-        nodes2rot <- intersect(sort(unique(unlist(Ancestors(x, c(x$reticulation))))), which(tabulate(x$edge[,1]) > 1) )
-        h <- node.height(ape::rotate(x, nodes2rot[1]))
+        h <- node.height(x)
         best_r <- sum(abs(h[x$reticulation[,1]]- h[x$reticulation[,2]]))
         best_c <- -1
-        r_hist[j] <- best_r
-        for(i in 1:length(nodes2rot)){
+#        r_hist[j] <- best_r
+        nodes2rot <- intersect(sort(unique(unlist(Ancestors(x, c(x$reticulation))))), which(tabulate(x$edge[,1]) > 1) )
+        for(i in seq_along(nodes2rot)){
             nh <- node.height(ape::rotate(x, nodes2rot[i]))
             best_nr <- sum(abs(nh[x$reticulation[,1]] - nh[x$reticulation[,2]]))
             if(best_nr < best_r){

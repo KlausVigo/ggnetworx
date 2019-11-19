@@ -42,10 +42,11 @@ fortify.evonet <- function(model, data,
 #' @param right logical
 #' @param branch.length variable for scaling branch, if 'none' draw cladogram
 #' @param ndigits number of digits to round numerical annotation variable
+#' @param min_crossing logical, rotate clades to minimize crossings
 #' @param ... additional parameter
 #' @return tree
 #' @seealso \code{\link[ape]{evonet}}, \code{\link[ggtree]{ggtree}}
-#' @importFrom magrittr %<>%
+## @importFrom magrittr %<>%
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 xlab
 #' @importFrom ggplot2 ylab
@@ -68,10 +69,18 @@ fortify.evonet <- function(model, data,
 ggevonet <- function (tr, mapping=NULL, layout="slanted", open.angle=0,
           mrsd=NULL, as.Date=FALSE, yscale="none", yscale_mapping=NULL,
           ladderize=FALSE, right=FALSE, branch.length="branch.length",
-          ndigits=NULL, ...)
+          ndigits=NULL, min_crossing=TRUE, ...)
 {
-    layout %<>% match.arg(c("rectangular", "slanted"))
+    layout <- match.arg(layout, c("rectangular", "slanted"))
 # , "fan", "circular", "radial", "unrooted", "equal_angle", "daylight"
+
+    if(is.null(tr$edge.length)){
+        nh <- node_depth_evonet(tr)
+        tr$edge.length <- nh[tr$edge[,1]] - nh[tr$edge[,2]]
+    }
+    if(min_crossing){
+        tr <- minimize_overlap(tr)
+    }
     if (yscale != "none") {
         layout <- "slanted"
     }
@@ -158,7 +167,7 @@ fortify.networx <- function(model, data,
 #' (2017), Intertwining phylogenetic trees and networks.
 #' \emph{Methods Ecol Evol}. \bold{8}, 1212--1220. doi:10.1111/2041-210X.12760
 #' @importFrom utils modifyList
-#' @importFrom magrittr %<>%
+## @importFrom magrittr %<>%
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 xlab
 #' @importFrom ggplot2 ylab
@@ -182,7 +191,7 @@ ggsplitnet <- function (tr, mapping=NULL, layout="slanted", open.angle=0,
         ladderize=FALSE, right=FALSE, branch.length="branch.length",
         ndigits=NULL, ...)
 {
-    layout %<>% match.arg(c("slanted"))
+    layout <- match.arg(layout, c("slanted"))
 # "rectangular", "fan", "circular", "radial", "unrooted", "equal_angle",
 #    "daylight"
     if (is.null(mapping)) {
