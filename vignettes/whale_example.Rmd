@@ -18,8 +18,8 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 
 ## tanggle usage examples
 
-You can use "tanggle" with other tree visualization packages such as ggimage. Here is an example phylogenetic network with images:
-
+You can use "tanggle" with other tree visualization packages such as ggimage. 
+Here is an example phylogenetic network with images:
 
 Calling neccessery packages/libraries:
 ```{r message=FALSE, warning=FALSE}
@@ -39,11 +39,17 @@ whalesnet = read.evonet(text="(((balMys,Egl00):9.055782863234407)#H13:2.63404791
 Creating species names/labels
 ```{r warning=FALSE}
 label <- whalesnet$tip.label 
+whalesnet$edge.length <- NULL
+```
+and create path to the images
+```{r}
+fdir <- system.file("extdata/pics", package = "ggnetworx")
 ```
 
 ```{r message=FALSE, warning=FALSE}
 ggevonet(whalesnet,layout = "slanted") +
-    xlim(NA, 10)  + 
-    geom_tiplab(aes(image=paste0(label, '.png')), geom="image", offset=2, align=1.5, size=.15) +
+    xlim(NA, 17)  + 
+    geom_tiplab(aes(image=file.path(fdir, paste0(label, '.png'))), geom="image",
+                offset=2, align=1.5, size=.15) +
     geom_tiplab(geom='label', offset=.5, hjust=.1)
 ```
