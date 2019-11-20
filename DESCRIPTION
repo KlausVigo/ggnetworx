@@ -26,8 +26,8 @@ Suggests:
     ggimage,
     knitr
 VignetteBuilder: knitr    
-biocViews: Software
+biocViews: Software, Visualization
 License: AGPL (>= 3)
 URL: https://github.com/KlausVigo/ggnetworx
 BugReports: https://github.com/KlausVigo/ggnetworx/issues
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0

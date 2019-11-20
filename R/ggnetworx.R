@@ -73,7 +73,7 @@ ggevonet <- function (tr, mapping=NULL, layout="slanted", open.angle=0,
 # , "fan", "circular", "radial", "unrooted", "equal_angle", "daylight"
 
     if(is.null(tr$edge.length)){
-        nh <- node_depth_evonet(tr)
+        nh <- node.depth.evonet(tr)
         tr$edge.length <- nh[tr$edge[,1]] - nh[tr$edge[,2]]
     }
     if(min_crossing){
@@ -195,7 +195,7 @@ ggsplitnet <- function (tr, mapping=NULL, layout="slanted", open.angle=0,
                 ladderize=ladderize, right=right, branch.length=branch.length,
                 ndigits=ndigits, ...)
 
-    p <- p + geom_tree3(layout=layout, ...)
+    p <- p + geom_splitnet(layout=layout, ...)
     p <- p + theme_tree()
     class(p) <- c("ggtree", class(p))
     return(p)
@@ -208,16 +208,21 @@ ggsplitnet <- function (tr, mapping=NULL, layout="slanted", open.angle=0,
 ##' add tree layer
 ##'
 ##'
-##' @title geom_tree3
+##' @title geom_splitnet
 ##' @param layout one of 'rectangular', 'slanted', 'circular', 'radial' or
 ##' 'unrooted'
 ##' @param ... additional parameter
 ##' @return tree layer
+##' @examples
+##' data(yeast, package="phangorn")
+##' dm <- phangorn::dist.ml(yeast)
+##' nnet <- phangorn::neighborNet(dm)
+##' ggplot(nnet, aes(x, y))  + geom_splitnet() + theme_tree()
 ##' @importFrom ggplot2 geom_segment
 ##' @importFrom ggplot2 aes
 ##' @export
 ##' @author Klaus Schliep
-geom_tree3 <- function(layout="rectangular", ...) {
+geom_splitnet <- function(layout="slanted", ...) {
     x <- y <- xend <- yend <- parent <- NULL
     lineend <- "round"
     if (layout == "rectangular" || layout == "fan" || layout == "circular") {

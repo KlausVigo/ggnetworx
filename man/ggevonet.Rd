@@ -4,11 +4,22 @@
 \alias{ggevonet}
 \title{ggevonet}
 \usage{
-ggevonet(tr, mapping = NULL, layout = "slanted", open.angle = 0,
-  mrsd = NULL, as.Date = FALSE, yscale = "none",
-  yscale_mapping = NULL, ladderize = FALSE, right = FALSE,
-  branch.length = "branch.length", ndigits = NULL,
-  min_crossing = TRUE, ...)
+ggevonet(
+  tr,
+  mapping = NULL,
+  layout = "slanted",
+  open.angle = 0,
+  mrsd = NULL,
+  as.Date = FALSE,
+  yscale = "none",
+  yscale_mapping = NULL,
+  ladderize = FALSE,
+  right = FALSE,
+  branch.length = "branch.length",
+  ndigits = NULL,
+  min_crossing = TRUE,
+  ...
+)
 }
 \arguments{
 \item{tr}{phylo object}
