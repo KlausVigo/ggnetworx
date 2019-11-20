@@ -1,0 +1,8 @@
+CHANGES IN VERSION 0.99
+-------------------------
+
+NEW FEATURES
+
+    o initial release. The main functions are ggsplitnet and ggevonet to
+    visualize split (or implicit) networks (unrooted, undirected) and explicit
+    networks (rooted, directed) with reticulations.
