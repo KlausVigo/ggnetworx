@@ -3,9 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/KlausVigo/ggnetworx/badge.svg?branch=master)](https://coveralls.io/github/KlausVigo/ggnetworx?branch=master)
 
 
-
-
-ggnetworx
+ggnetworx is superseded. Consider tanggle instead.
 ========================================================
 
 ggnetworx provides function to plot phylogenetic networks of class `evonet` from *ape* and split graphs of class `networx` from *phangorn*.
